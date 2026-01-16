@@ -1,9 +1,17 @@
 {
-    "name": "Alpine Hardcore Chroot",
-    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    "name": "Pure Alpine Dev",
+    "build": {
+        "dockerfile": "Dockerfile"
     },
-    "postCreateCommand": "bash .devcontainer/setup.sh",
-    "remoteUser": "vscode" 
+    "remoteUser": "vscode",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+    // Эти настройки важны для работы mount внутри контейнера
+    "runArgs": ["--privileged"],
+    "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
